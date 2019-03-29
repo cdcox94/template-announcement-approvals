@@ -93,6 +93,7 @@ app.post('/interactions', async(req, res) => {
       // Initial button interaction - Start creatng an announcement
       if(callback_id === 'makeAnnouncement') {
         try {
+          console.log(trigger_id);
           const result = await openDialog(trigger_id);
           if(result.data.error) {
             res.sendStatus(500);
@@ -183,7 +184,12 @@ const openDialog = async(trigger_id) => {
           type: 'select',
           name: 'approver',
           label: 'Select an approver',
-          data_source: 'users'
+          options: [
+            {
+              label: "Christopher D. Cox",
+              value: "UAELWKT6X",
+            }
+          ]
         },
         {
           type: 'select', 
@@ -194,7 +200,7 @@ const openDialog = async(trigger_id) => {
       ]
     })
   };
-
+  
   // open the dialog by calling dialogs.open method and sending the payload
   return axios.post(`${apiUrl}/dialog.open`, qs.stringify(dialogData));
 };

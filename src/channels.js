@@ -23,7 +23,13 @@ const findAuthedChannels = async(id, cursor) => {
 
   const result = await axios.post(`${apiUrl}/users.conversations`, qs.stringify(args));
 
+  const otherresults = await axios.post(`${apiUrl}/users.identity`, qs.stringify(args));
+
+  console.log(otherresults);
+
   const { channels, response_metadata } = result.data;
+
+  console.log(response_metadata);
 
   if (response_metadata.next_cursor !== '') {
     return channels.concat(await findAuthedChannels(id, response_metadata.next_cursor));
